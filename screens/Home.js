@@ -17,7 +17,7 @@ export default function Home() {
                 color="black" 
                 onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
              /> 
-             <Text style={{fontSize:17}}>Home</Text>
+             <Text style={styles.headerText}>Home</Text>
           </View>
           
           <View style={styles.innerContainer}>
