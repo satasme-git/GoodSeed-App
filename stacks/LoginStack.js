@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Home from '../screens/Home'
-import Details from '../screens/Details';
+import Login from '../screens/Login'
+import SignUp from '../screens/SignUp'
 
 
 const Stack = createStackNavigator();
@@ -11,19 +11,20 @@ export default function MyStack() {
   return (
     <Stack.Navigator>
       <Stack.Screen 
-        name="Home" component={Home}         
+        name="Login" component={Login}         
         options={{
           headerShown: false,
         }} 
       />
       <Stack.Screen 
-        name="Details" 
-        component={Details}
+        name="SignUp" 
+        component={SignUp}
         options={{
           headerShown: false,
         }}
       />
-      
+     
+    
     </Stack.Navigator>
   );
 }

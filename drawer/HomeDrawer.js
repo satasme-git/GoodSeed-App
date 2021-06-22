@@ -3,6 +3,8 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import Tabs from '../tabs/HomeTabs'
 import About from '../screens/About'
+import LoginStack from '../stacks/LoginStack';
+import Profile from '../screens/Profile';
 
 const Drawer = createDrawerNavigator();
 
@@ -20,6 +22,16 @@ export default function MyDrawer() {
       name="About" 
       component={About} 
       />
+
+      <Drawer.Screen 
+      name="Login" 
+      component={LoginStack} 
+      />
+      <Drawer.Screen 
+      name="Profile" 
+      component={Profile} 
+      />
+     
 
     </Drawer.Navigator>
   );
