@@ -611,7 +611,7 @@ export default function CutomHeaderScreen() {
           ),
         },
         {
-          title: 'Promote Social Media',
+          title: 'General Food Consumption',
           content: renderContent(
             <View>
               <View

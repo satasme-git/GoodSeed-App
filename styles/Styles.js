@@ -7,51 +7,103 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
+  },  
+  scrollContainer: {
+    flex: 1,
+  },
+  contentContainer:{
+    justifyContent:'space-between',
+  },
+  viewContainer: {
+    flex: 1,
+    backgroundColor: 'white',
+    marginTop: windowHeight/10
+  },
+  contactView: {
+    backgroundColor:'white',
+    margin:10,
+    paddingVertical:10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+
+    elevation: 3,
+    alignSelf:'flex-end'
   },
   header: {
-    height: windowHeight / 10,
-    width: windowWidth,
+    height: windowHeight/10,
+    width:windowWidth,
     backgroundColor: 'white',
-    elevation: 5,
-    position: 'absolute',
-    top: 0,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    paddingLeft: 10,
-    zIndex: 1,
-    padding: 10,
+    elevation:5,
+    position:'absolute',
+    top:0,
+    flexDirection:'row',
+    alignItems:'center',
+    justifyContent:'flex-start',
+    paddingLeft:10,
+    zIndex:1,
+    padding:10
+  },
+  newHeader: {
+    height: windowHeight/1.5,
+    width:windowWidth,
+    backgroundColor: '#4b937c',
+    position:'absolute',
+    top:0,
+    zIndex:0,
+    flexDirection:'row',
+    alignItems:'flex-start',
+    justifyContent:'flex-start',
+    paddingLeft:10,
+    padding:10,
   },
   innerContainer: {
     flex: 1,
     backgroundColor: 'white',
-    paddingTop: windowHeight / 8,
-    padding: 10,
+    paddingTop:windowHeight/8,
+    padding:10
   },
   headerText: {
     fontSize: 20,
   },
-  inputText: {
+  inputText:{
     // backgroundColor:'#8aa8ae',
-    height: 40,
-    marginLeft: 10,
-    width: windowWidth - 40,
-    borderRadius: 20,
-    paddingLeft: 50,
-    textAlignVertical: 'center',
-    borderColor: 'gray',
-    borderBottomWidth: 1,
-    margin: 5,
+    height:40,
+    marginLeft:10,
+    width:windowWidth-40,
+    borderRadius:20,
+    paddingLeft:50,
+    textAlignVertical:'center',
+    borderColor:'gray',
+    borderBottomWidth:1,
+    margin:5
+  },  
+  inputText2:{
+    // backgroundColor:'#8aa8ae',
+    height:40,
+    // marginLeft:10,
+    width:windowWidth-50,
+    borderRadius:5,
+    paddingLeft:20,
+    textAlignVertical:'center',
+    borderColor:'gray',
+    marginHorizontal:15,
+    marginBottom:10,
+    borderBottomWidth:1,
   },
-  loginBoard: {
-    backgroundColor: 'white',
-    height: 'auto',
-    marginLeft: 0,
-    width: windowWidth - 20,
-    borderRadius: 5,
-    textAlignVertical: 'center',
-    paddingVertical: 10,
-    shadowColor: '#000',
+  loginBoard:{
+    backgroundColor:'white',
+    height:'auto',
+    marginLeft:0,
+    width:windowWidth-20,
+    borderRadius:5,
+    textAlignVertical:'center',
+    paddingVertical:10,
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -60,41 +112,210 @@ const styles = StyleSheet.create({
     shadowRadius: 2.62,
 
     elevation: 4,
-    zIndex: 2,
-    paddingTop: 30,
+    zIndex:2, 
+    paddingTop:30
   },
-  loginpic: {
-    width: 65,
-    height: 65,
-    backgroundColor: 'white',
-    borderRadius: 50,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    alignSelf: 'center',
-    marginBottom: -32.5,
-    shadowColor: '#000',
+  loginBoard2:{
+    height:'auto',
+    marginLeft:0,
+    width:windowWidth-20,
+    borderRadius:5,
+    textAlignVertical:'center',
+    paddingVertical:10,
+    zIndex:2, 
+    paddingTop:30,
+    margin:10,
+    position:'absolute',
+    bottom:10,
+    alignSelf:'center'
+  },
+  loginpic:{
+    width:65,
+    height:65,
+    backgroundColor:'white',
+    borderRadius:50,
+    alignItems:'center',
+    justifyContent:'flex-start',
+    alignSelf:'center',
+    marginBottom:-32.5,
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-
+    
     elevation: 5,
-    zIndex: 1,
+    zIndex:1
   },
-  orBar: {
-    height: 0.7,
-    width: windowWidth / 3,
-    backgroundColor: 'gray',
+  orBar:{
+    height:0.7,
+    width:windowWidth/3,
+    backgroundColor:'gray',
   },
-  linearGradient: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+  linearGradient:{
+    flex:1,
+    alignItems:'flex-start',
+    justifyContent:'center'
   },
-
-  /////////////////////// chamil ////////////////////
+  giantView:{
+    width:(windowWidth/2)-20,
+    height:(windowHeight/2),
+    margin:5,
+    justifyContent:'flex-end',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    
+    elevation: 5,
+    
+  },
+  textStyle2:{
+    width:(windowWidth/2)-20,
+    fontWeight:'bold',
+    fontSize:16,
+    textAlign:'center',
+    padding:5,
+    lineHeight:25
+  },
+  textStyleBlur:{
+    width:(windowWidth/2)-20,
+    borderBottomLeftRadius:5,
+    borderBottomRightRadius:5,
+    alignSelf:'flex-end',
+    backgroundColor:'rgba(255,255,255,0.5)',
+    paddingVertical:5, 
+  },
+  absolute: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    height:windowHeight,
+    width:windowWidth
+  },
+  avatar: {
+    height:windowWidth/4,
+    width:windowWidth/4,
+    marginHorizontal:10,
+    marginVertical:10,
+    borderRadius:100
+  },
+  avatar2: {
+    height:windowWidth/3,
+    width:windowWidth/3,
+    borderRadius:100,
+    alignSelf:'center',
+    zIndex:1
+  },
+  arc: {
+    height:windowHeight,
+    width:windowWidth,
+    // alignSelf:'flex-end',
+    resizeMode:'contain',
+    bottom:0,
+    position:'absolute',
+    // marginLeft:-windowWidth/2,
+    zIndex:2
+  },
+  map: {
+    height:windowHeight,
+    width:windowWidth,
+    // alignSelf:'flex-end',
+    resizeMode:'contain',
+    bottom:0,
+    position:'absolute',
+    // marginLeft:-windowWidth/2,
+    zIndex:2
+  },
+  
+  heart: {
+    height:(windowWidth/2)-20,
+    width:windowWidth/2,
+    top:40,
+    // alignSelf:'flex-end',
+    position:'absolute',
+    // marginLeft:-windowWidth/2,
+    zIndex:2
+  },
+  heartBg: {
+    height:(windowWidth/2)-20,
+    width:windowWidth/2,
+    top:40,
+    // alignSelf:'flex-end',
+    position:'absolute',
+    // marginLeft:-windowWidth/2,
+    zIndex:1
+  },
+  fill: {
+    height:((windowWidth/2)-20)/5,
+    width:windowWidth/2,
+    backgroundColor:'white'
+  },
+  fill2: {
+    height:((windowWidth/2)-20)/5,
+    width:(windowWidth/2)/5,
+    backgroundColor:'white'
+  },
+  fill3: {
+    height:((windowWidth/2)-20)/5,
+    width:(windowWidth/2)/5,
+    backgroundColor:'white'
+  },
+  fill4: {
+    height:((windowWidth/2)-20)/5,
+    width:(windowWidth/2)/5,
+    backgroundColor:'white'
+  },
+  fill5: {
+    height:((windowWidth/2)-20)/5,
+    width:(windowWidth/2)/5,
+    backgroundColor:'white'
+  },
+  particleContainer: {
+    elevation: 2,
+    zIndex: 2
+  },
+  star: {
+    width: 24,
+    height: 24
+  },
+  bg: {
+    height:windowHeight,
+    width:windowWidth,
+    alignSelf:'center',
+    bottom:0,
+    position:'absolute',
+    zIndex:1
+    // marginLeft:-windowWidth/2
+  },
+  road: {
+    height:windowHeight,
+    width:windowWidth*2,
+    alignSelf:'center',
+    resizeMode:'contain',
+    bottom:-200,
+    position:'absolute',
+    // marginLeft:-windowWidth/2,
+    zIndex:2
+  },
+  grass: {
+    height:windowHeight,
+    width:windowWidth*2,
+    alignSelf:'center',
+    resizeMode:'contain',
+    bottom:-110,
+    position:'absolute',
+    // marginLeft:-windowWidth/2,
+    zIndex:1
+  },
+  ///////////////// chamil ///////////////////
   textinputcontainer: {
     backgroundColor: 'transparent',
     width: windowWidth - 30,
@@ -182,7 +403,6 @@ const styles = StyleSheet.create({
   contentText: {
     fontSize: 16,
   },
-  //////////////
   cardcontainer: {
     marginTop: 12,
     shadowColor: 'rgb(35,35,35)',
@@ -241,22 +461,24 @@ const buttons = StyleSheet.create({
     left: 10,
     top: 10,
     zIndex: 1,
-    elevation: 4,
+    elevation:4,
   },
   login: {
-    backgroundColor: '#255c43',
     zIndex: 1,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    // width:windowWidth-40,
-    marginTop: 10,
-    marginLeft: 10,
-    alignItems: 'center',
-    borderRadius: 5,
-    alignSelf: 'center',
+    paddingHorizontal:10,
+    paddingVertical:5,
+    width:windowWidth-100,
+    margin:5,
+    height:40,
+    borderWidth:1,
+    borderColor:'#255c43',
+    alignItems:'center',
+    borderRadius:5,
+    alignSelf:'center',
+    backgroundColor:'white'
   },
   text: {
-    color: 'white',
+    color:'#255c43',
     fontSize: 15,
   },
 });

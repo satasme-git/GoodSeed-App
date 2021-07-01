@@ -3,8 +3,9 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import Tabs from '../tabs/HomeTabs'
 import About from '../screens/About'
-import LoginStack from '../stacks/LoginStack';
-import Profile from '../screens/Profile';
+import LoginStack from '../stacks/LoginStack'
+import Contact from '../screens/Contact'
+import SelectStack from '../stacks/SelectStack';
 
 const Drawer = createDrawerNavigator();
 
@@ -24,14 +25,19 @@ export default function MyDrawer() {
       />
 
       <Drawer.Screen 
+      name="Contact us" 
+      component={Contact} 
+      />
+
+      <Drawer.Screen 
+      name="Profile" 
+      component={SelectStack} 
+      />
+
+      <Drawer.Screen 
       name="Login" 
       component={LoginStack} 
       />
-      <Drawer.Screen 
-      name="Profile" 
-      component={Profile} 
-      />
-     
 
     </Drawer.Navigator>
   );

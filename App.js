@@ -4,12 +4,17 @@ import { NavigationContainer } from '@react-navigation/native';
 import HomeDrawer from './drawer/HomeDrawer'
 import { StatusBar } from 'react-native';
 
+import SelectStack from './stacks/SelectStack'
+import LoginStack from './stacks/LoginStack'
+
 export default function App() {
   return (
     
     <NavigationContainer>
       <StatusBar backgroundColor={'#4b937c'} />
-      <HomeDrawer/>
-    </NavigationContainer>
+      {/* <HomeDrawer/> */}
+      <SelectStack/>
+      {/* <LoginStack/> */}
+      </NavigationContainer>
   );
 }

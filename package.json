@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-native-community/datetimepicker": "^3.5.2",
     "@react-native-community/masked-view": "^0.1.11",
+    "@react-native-cookies/cookies": "^6.0.8",
     "@react-native-google-signin/google-signin": "^6.0.0",
     "@react-native-picker/picker": "^1.16.1",
     "@react-navigation/bottom-tabs": "^5.11.11",
@@ -26,13 +27,16 @@
     "react-native-fbsdk": "^3.0.0",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-linear-gradient": "^2.5.6",
+    "react-native-modal": "^12.0.2",
     "react-native-modal-dropdown": "https://github.com/siemiatj/react-native-modal-dropdown",
     "react-native-paper": "^4.9.1",
+    "react-native-particles": "^0.0.8",
     "react-native-reanimated": "^2.1.0",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^3.2.0",
     "react-native-sticky-parallax-header": "^0.4.0",
-    "react-native-vector-icons": "^8.1.0"
+    "react-native-vector-icons": "^8.1.0",
+    "react-native-view-shot": "^3.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
