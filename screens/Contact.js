@@ -24,11 +24,11 @@ export default function Contact() {
             />
         <View style={styles.newHeader}>
  
-            <Text style={[styles.headerText,{marginLeft:40}]}>Contact Us</Text>
+            <Text style={[styles.headerText,{marginLeft:40,marginTop:0}]}>Contact Us</Text>
         </View>
 
         <ScrollView style={styles.scrollContainer} contentContainerStyle={styles.contentContainer}>
-        <Image source={require('../assets/contact.png')} style={{height:170,width:170,resizeMode:'contain',alignSelf:'center',marginTop:40}} />
+        <Image source={require('../assets/contact.png')} style={{height:120,width:120,resizeMode:'contain',alignSelf:'center',marginTop:50}} />
         <View style={{flexDirection:'row',justifyContent:'space-around',margin:10}}>
           <View style={{flexDirection:'row'}}>
             <Ionicons

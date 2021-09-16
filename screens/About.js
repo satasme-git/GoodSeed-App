@@ -18,10 +18,10 @@ export default function About() {
                 color="black" 
                 onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
             /> 
-            <Text style={styles.headerText}>About Us</Text>
+            <Text style={{color:'black',fontSize:22,marginLeft:10}}>About Us</Text>
         </View>
         <ScrollView style={styles.viewContainer}>
-        <Text style={{paddingHorizontal:10,paddingTop:10}}>
+        <Text style={{paddingHorizontal:15,paddingTop:10,fontSize:16,textAlign:'justify'}}>
           “Then you will know the truth, and the truth will set you free ” _ John 8:32 {'\n'}
           “GOOD SEEDS” {'\n'}
           “Good seeds” is a lifestyle solutions provider for modern humanitarian problems. The main focus of GOOD SEEDS is to sow good habits, into the hearts of people from a young age to change lifestyles and build healthy, wealthy, joyful lives and create a new generation with good habits. Therefore, we have identified a few modern problems and have initiated prevention steps to STOP or MINIMIZE the suffering been the victims of them. {'\n'}

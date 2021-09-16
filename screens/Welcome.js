@@ -18,7 +18,7 @@ import {
     GraphRequestManager,
 } from 'react-native-fbsdk';
 
-import { Background } from '../styles/Background';
+import { Background , WelcomeBackground } from '../styles/Background';
 
 export default function Login() {
   
@@ -141,35 +141,40 @@ export default function Login() {
     return (
         <View style={[styles.container]}>
             
-            <Background>
-            {/* <Animatable.Image delay={300} animation={'zoomIn'} source={require('../assets/icon.png')} style={{width:150,height:120,resizeMode:'cover',position:'absolute',top:120}} /> */}
-                <View style={styles.loginBoard2}>
-                    <Animatable.Text style={{color:'black',fontSize:17,textAlign:'center'}} delay={300} animation={'bounceIn'}>
-                        Welcome to
-                    </Animatable.Text>
-                    <Animatable.Text style={{color:'black',fontSize:25,padding:5,textAlign:'center',fontWeight:'bold'}} delay={300} animation={'bounceIn'}>
-                        Health Club App
+            <WelcomeBackground>
+              <View style={{position:'absolute',top:50}}>
+               <Animatable.Text style={{color:'white',fontSize:30,textAlign:'center',paddingBottom:50}} delay={300} animation={'bounceIn'}>
+                        Welcome
+              </Animatable.Text>
+              <Animatable.Image delay={300} animation={'zoomIn'} source={require('../assets/logo.png')} style={{width:150,height:120,resizeMode:'cover'}} />
+              
+              </View>
+                 
+                <Animatable.View animation={'slideInUp'} style={styles.loginBoard2}>
+                    
+                    <Animatable.Text style={{color:'#6bb333',fontSize:25,paddingBottom:10,textAlign:'center',fontWeight:'bold'}} delay={300} animation={'bounceIn'}>
+                        Health App
                     </Animatable.Text>
 
-                    <TouchableHighlight style={buttons.login} onPress={()=>navigation.navigate('Login')}>
+                    <TouchableHighlight underlayColor={'#104c2e'} style={[buttons.login,{backgroundColor: '#6bb333',borderColor:'#6bb333',}]} onPress={()=>navigation.navigate('Login')}>
                       <View style={{flexDirection:'row',justifyContent:'space-evenly',alignItems:'center'}}>
                         <Ionicons 
                           name="log-in" 
                           size={22} 
-                          color="black" 
+                          color="white" 
                           style={{paddingRight:10}}
                         /> 
-                        <Text style={buttons.text}>Login</Text>
+                        <Text style={[buttons.text,{color:'#fff'}]}>Login</Text>
                       </View>
                         
                     </TouchableHighlight>
 
-                    <TouchableHighlight style={buttons.login} onPress={()=>navigation.navigate('Login')}>
+                    <TouchableHighlight underlayColor={'rgba(107,179,51,0.2)'} style={buttons.login} onPress={()=>{}}>
                       <View style={{flexDirection:'row',justifyContent:'space-evenly',alignItems:'center'}}>
                         <Ionicons 
                           name="ios-logo-facebook" 
                           size={20} 
-                          color="black" 
+                          color="#1773ea" 
                           style={{paddingRight:10}}
                         /> 
                         <Text style={buttons.text}>Login with Facebook</Text>
@@ -201,27 +206,29 @@ export default function Login() {
                     
                     <View style={{alignSelf:'center'}}>
                     {!user.idToken ? 
-                      <TouchableHighlight style={buttons.login} onPress={signIn}>
+                      <TouchableHighlight underlayColor={'rgba(107,179,51,0.2)'} style={buttons.login} onPress={signIn}>
                       <View style={{flexDirection:'row',justifyContent:'space-evenly',alignItems:'center'}}>
-                        <Ionicons 
+                        {/* <Ionicons 
                           name="ios-logo-google" 
                           size={20} 
                           color="black" 
                           style={{paddingRight:10}}
-                        /> 
+                        />  */}
+                        <Image source={require('../assets/google.png')} style={{width:20,height:20,marginRight:10}} />
                         <Text style={buttons.text}>Login with Gmail</Text>
                       </View>
                         
                     </TouchableHighlight>
                     :
-                    <TouchableHighlight style={buttons.login} onPress={signOut}>
+                    <TouchableHighlight underlayColor={'rgba(107,179,51,0.2)'} style={buttons.login} onPress={signOut}>
                     <View style={{flexDirection:'row',justifyContent:'space-evenly',alignItems:'center'}}>
-                      <Ionicons 
+                      {/* <Ionicons 
                         name="ios-logo-google" 
                         size={20} 
                         color="black" 
                         style={{paddingRight:10}}
-                      /> 
+                      />  */}
+                      <Image source={require('../assets/google.png')} style={{width:20,height:20,marginRight:10}} />
                       <Text style={buttons.text}>Logout</Text>
                     </View>
                       
@@ -236,8 +243,8 @@ export default function Login() {
                         </TouchableHighlight>
                     </View>
 
-                    </View> 
-            </Background> 
+                    </Animatable.View> 
+            </WelcomeBackground> 
         </View>
     )
 }

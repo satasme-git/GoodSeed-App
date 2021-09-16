@@ -5,14 +5,23 @@ import Home from '../screens/Home'
 import Form from '../screens/Form'
 import Avatar from '../screens/Avatar'
 import Select from '../screens/Select'
+import Challenge from '../screens/Challenge'
+import Step from '../screens/Step'
+
 
 const Stack = createStackNavigator();
 
 export default function MyStack() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator initialRouteName={'Challenge'}>
       <Stack.Screen 
         name="Home" component={Home}         
+        options={{
+          headerShown: false,
+        }} 
+      />
+      <Stack.Screen 
+        name="Challenge" component={Challenge}         
         options={{
           headerShown: false,
         }} 

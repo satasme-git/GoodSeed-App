@@ -56,7 +56,7 @@ export default function Avatar() {
 
     const renderItem = ({ item }) => (
       <TouchableOpacity onPress={()=>{
-        navigation.navigate('HomeDrawer');
+        navigation.navigate('Home');
         // setImg(item.png);toggleModal()
         }}>
         <Animatable.Image style={styles.avatar} source={item.png}

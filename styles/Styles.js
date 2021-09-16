@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
     height: windowHeight/10,
     width:windowWidth,
     backgroundColor: 'white',
-    elevation:5,
     position:'absolute',
     top:0,
     flexDirection:'row',
@@ -51,7 +50,7 @@ const styles = StyleSheet.create({
   newHeader: {
     height: windowHeight/1.5,
     width:windowWidth,
-    backgroundColor: '#4b937c',
+    backgroundColor: '#6bb333',
     position:'absolute',
     top:0,
     zIndex:0,
@@ -63,18 +62,23 @@ const styles = StyleSheet.create({
   },
   innerContainer: {
     flex: 1,
-    backgroundColor: 'white',
-    paddingTop:windowHeight/8,
-    padding:10
+    backgroundColor: '#e5e5e5',
+    paddingTop:windowHeight/9,
+    // alignItems:""
+  },
+  profileInnerContainer: {
+    paddingTop:0,
+    // alignItems:""
   },
   headerText: {
     fontSize: 20,
+    marginTop:30
   },
   inputText:{
     // backgroundColor:'#8aa8ae',
     height:40,
     marginLeft:10,
-    width:windowWidth-40,
+    width:windowWidth-55,
     borderRadius:20,
     paddingLeft:50,
     textAlignVertical:'center',
@@ -99,11 +103,13 @@ const styles = StyleSheet.create({
     backgroundColor:'white',
     height:'auto',
     marginLeft:0,
-    width:windowWidth-20,
-    borderRadius:5,
+    width:windowWidth,
+    borderTopLeftRadius:50,
     textAlignVertical:'center',
     paddingVertical:10,
     shadowColor: "#000",
+    position: 'absolute',
+    bottom:0,
     shadowOffset: {
       width: 0,
       height: 2,
@@ -118,16 +124,18 @@ const styles = StyleSheet.create({
   loginBoard2:{
     height:'auto',
     marginLeft:0,
-    width:windowWidth-20,
-    borderRadius:5,
+    width:windowWidth,
+    borderTopLeftRadius:50,
+    borderTopRightRadius:50,
     textAlignVertical:'center',
     paddingVertical:10,
     zIndex:2, 
     paddingTop:30,
-    margin:10,
+    margin:0,
     position:'absolute',
-    bottom:10,
-    alignSelf:'center'
+    bottom:0,
+    alignSelf:'center',
+    backgroundColor:'white'
   },
   loginpic:{
     width:65,
@@ -225,56 +233,72 @@ const styles = StyleSheet.create({
     zIndex:2
   },
   map: {
-    height:windowHeight,
-    width:windowWidth,
+    height:windowHeight/1.2,
+    width:windowWidth/1.2,
     // alignSelf:'flex-end',
-    resizeMode:'contain',
-    bottom:0,
+    // resizeMode:'contain',
+    alignSelf:'center',
+    bottom:20,
     position:'absolute',
     // marginLeft:-windowWidth/2,
     zIndex:2
   },
   
   heart: {
-    height:(windowWidth/2)-20,
-    width:windowWidth/2,
-    top:40,
+    height:(windowWidth/2.2)-20,
+    width:windowWidth/2.2,
+    top:30,
     // alignSelf:'flex-end',
     position:'absolute',
     // marginLeft:-windowWidth/2,
-    zIndex:2
+    zIndex:2,
+    // backgroundColor:'red',
+    // marginTop:-10
+    left:5
   },
   heartBg: {
-    height:(windowWidth/2)-20,
-    width:windowWidth/2,
-    top:40,
+    height:(windowWidth/2.2)-20,
+    width:windowWidth/2.2,
+    top:30,
     // alignSelf:'flex-end',
     position:'absolute',
     // marginLeft:-windowWidth/2,
-    zIndex:1
+    zIndex:1,
+    left:5
+  },
+  stepCounterView: {
+    height:(windowWidth/2.2)-20,
+    width:windowWidth/2.2,
+    top:50,
+    // alignSelf:'flex-end',
+    position:'absolute',
+    // marginLeft:-windowWidth/2,
+    zIndex:1,
+    right:10,
+    // backgroundColor:'red'
   },
   fill: {
-    height:((windowWidth/2)-20)/5,
+    height:((windowWidth/2.2)-20)/5,
     width:windowWidth/2,
     backgroundColor:'white'
   },
   fill2: {
-    height:((windowWidth/2)-20)/5,
+    height:((windowWidth/2.2)-20)/5,
     width:(windowWidth/2)/5,
     backgroundColor:'white'
   },
   fill3: {
-    height:((windowWidth/2)-20)/5,
+    height:((windowWidth/2.2)-20)/5,
     width:(windowWidth/2)/5,
     backgroundColor:'white'
   },
   fill4: {
-    height:((windowWidth/2)-20)/5,
+    height:((windowWidth/2.2)-20)/5,
     width:(windowWidth/2)/5,
     backgroundColor:'white'
   },
   fill5: {
-    height:((windowWidth/2)-20)/5,
+    height:((windowWidth/2.2)-20)/5,
     width:(windowWidth/2)/5,
     backgroundColor:'white'
   },
@@ -342,7 +366,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#4b937c',
+    backgroundColor: '#6bb333',
   },
   headerWrapper: {
     flexDirection: 'row',
@@ -357,6 +381,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     fontSize: 20,
     fontWeight: 'normal',
+    
   },
   titleStyle: {
     color: 'white',
@@ -365,14 +390,14 @@ const styles = StyleSheet.create({
     fontSize: 30,
     // marginTop:-15,
     marginBottom: -10,
-    // backgroundColor: 'rgba(0,0,0,0.6)'
+    // backgroundColor: '#6bb333'
   },
   tabTextContainerStyle: {
     backgroundColor: 'transparent',
     borderRadius: 18,
   },
   tabTextContainerActiveStyle: {
-    backgroundColor: '#00c853',
+    backgroundColor: 'rgba(255,255,255,0.5)',
   },
   tabTextStyle: {
     fontSize: 15,
@@ -388,7 +413,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     paddingHorizontal: 12,
     paddingVertical: 8,
-    color: 'white',
+    color: 'black',
   },
   tabWrapperStyle: {
     paddingVertical: 10,
@@ -417,8 +442,9 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: 'white',
     borderRadius: 24,
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
     paddingVertical: 16,
+    marginHorizontal:5
   },
   labelContainer: {
     flexDirection: 'row',
@@ -453,6 +479,90 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: 'gray',
   },
+  bottomSheet: {
+    borderTopLeftRadius:50,
+    borderTopRightRadius:50,
+    height:windowHeight/2,
+    padding:0,
+    zIndex:1,
+    backgroundColor:'#fff',
+    marginTop:10
+  },
+  profileHeader: {
+    borderRadius:10,
+    borderTopLeftRadius:50,
+    borderTopRightRadius:50,
+    height:windowHeight/3,
+    backgroundColor: 'white',
+  },
+  imageBg: {
+    height:windowHeight/3,
+    width:windowWidth,
+    justifyContent:'flex-end'
+  },
+  imageBgInner:{    
+    borderRadius:10,
+    borderTopLeftRadius:50,
+    borderTopRightRadius:50,
+  },
+  profilHeader:{
+    backgroundColor:'rgba(255,255,255,0.9)',
+    height:windowHeight/6,
+    justifyContent:'center',
+    alignItems:'center',
+    paddingTop:(windowHeight/8)/2,
+    borderBottomLeftRadius:10,
+    borderBottomRightRadius:10
+  },
+  profilePic:{
+    height:windowHeight/8,
+    width:windowHeight/8,
+    borderRadius:100,
+    alignSelf:'center',
+    zIndex:2
+  },
+  profilePicBig:{
+    height:windowHeight/3,
+    width:windowHeight/5,
+    borderTopLeftRadius:10,
+    borderTopRightRadius:10,
+    alignSelf:'center',
+    zIndex:2,
+    margin:0,
+    resizeMode:'center',
+    // margin:10
+  },
+  profilePicBig2:{
+    height:windowHeight/3,
+    width:windowHeight/5,
+    borderTopLeftRadius:10,
+    borderTopRightRadius:10,
+    alignSelf:'center',
+    zIndex:2,
+    margin:0,
+    resizeMode:'center',
+    // margin:10
+  },
+  profilPicBack:{
+    backgroundColor:'rgba(255,255,255,0.7)',
+    height:windowHeight/7,
+    width:windowHeight/7,
+    alignItems:'center',
+    justifyContent:'center',
+    alignSelf:'center',    
+    zIndex:2,
+    borderRadius:200,
+    marginBottom:-(windowHeight/8)/2,
+  },
+  divider:{
+    height:0.7,
+    width:windowWidth-40,
+    alignSelf:'center',
+    backgroundColor:'#e5e5e5',
+    margin:10
+  },
+  
+  
 });
 
 const buttons = StyleSheet.create({
@@ -473,14 +583,24 @@ const buttons = StyleSheet.create({
     borderWidth:1,
     borderColor:'#255c43',
     alignItems:'center',
-    borderRadius:5,
+    borderRadius:15,
     alignSelf:'center',
-    backgroundColor:'white'
+    backgroundColor:'#f8f8f8'
   },
   text: {
-    color:'#255c43',
+    color:'#4c4c4c',
     fontSize: 15,
   },
+  modalButton :{
+    alignSelf:'flex-end',
+    // borderWidth:1,
+    // paddingHorizontal:25,
+    paddingVertical:10,
+    borderBottomRightRadius:10,
+    width:(windowWidth-40)/2,
+    margin:-10,
+    alignItems:'center'
+  }
 });
 
 export {styles, buttons};

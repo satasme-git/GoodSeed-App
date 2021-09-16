@@ -1,5 +1,5 @@
-import React, {useRef, useState, useEffect} from 'react';
-
+import React, {useRef, useState,} from 'react';
+import { useRoute } from '@react-navigation/native';
 import {
   Text,
   View,
@@ -26,7 +26,7 @@ import moment from 'moment';
 import {Picker} from '@react-native-picker/picker';
 import ModalDropdown from 'react-native-modal-dropdown';
 import {RadioButton} from 'react-native-paper';
-
+import StepIndicator from 'react-native-step-indicator';
 import DropDownPicker from 'react-native-dropdown-picker';
 const windowHeight = Dimensions.get('window').height;
 const windowWidth = Dimensions.get('window').width - 25;
@@ -34,6 +34,37 @@ const {event, ValueXY} = Animated;
 const scrollY = new ValueXY();
 
 export default function CutomHeaderScreen() {
+
+  const labels = ["Cart","Delivery Address","Order Summary"];
+    const customStyles = {
+      stepIndicatorSize: 25,
+      currentStepIndicatorSize:30,
+      separatorStrokeWidth: 2,
+      currentStepStrokeWidth: 3,
+      stepStrokeCurrentColor: '#fe7013',
+      stepStrokeWidth: 3,
+      stepStrokeFinishedColor: '#fe7013',
+      stepStrokeUnFinishedColor: '#aaaaaa',
+      separatorFinishedColor: '#fe7013',
+      separatorUnFinishedColor: '#aaaaaa',
+      stepIndicatorFinishedColor: '#fe7013',
+      stepIndicatorUnFinishedColor: '#ffffff',
+      stepIndicatorCurrentColor: '#ffffff',
+      stepIndicatorLabelFontSize: 13,
+      currentStepIndicatorLabelFontSize: 13,
+      stepIndicatorLabelCurrentColor: '#fe7013',
+      stepIndicatorLabelFinishedColor: '#ffffff',
+      stepIndicatorLabelUnFinishedColor: '#aaaaaa',
+      labelColor: '#999999',
+      labelSize: 13,
+      currentStepLabelColor: '#fe7013'
+    }
+
+    const [currentPosition, setCurrentPosition] = useState(0);
+
+  const BaseUrl = require('../styles/BaseUrl');
+  const route = useRoute();
+  
   const [isLoading, setLoading] = useState(true);
   const [datas, setData] = useState([]);
 
@@ -139,6 +170,7 @@ export default function CutomHeaderScreen() {
 
   const basicDetails = (
     name,
+    // email,
     dob,
     grade,
     classNumber,
@@ -155,21 +187,32 @@ export default function CutomHeaderScreen() {
       weight: weight,
       parent_name: parent,
     };
+    const formData = new FormData()
 
-    fetch('https://health.bestceylonhotels.com/api/basic_details/1', {
+    formData.append('name', name);
+    formData.append('dob', dob);
+    formData.append('email', route.params.email);
+    formData.append('grade', grade);
+    formData.append('class_number', classNumber);
+    formData.append('height', height);
+    formData.append('weight', weight);
+    formData.append('parent_name', parent);
+
+
+    fetch(BaseUrl.BASE_URL+'/api/basicDetails/', {
       method: 'POST', // or 'PUT'
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
+      // headers: {
+      //   Accept: 'application/json',
+      //   'Content-Type': 'application/json',
+      // },
+      body: formData,
     })
-      .then(response => response.json())
+      .then(response => response.text())
       .then(data => {
         console.log('Success:', data);
       })
       .catch(error => {
-        console.error('Error:', error);
+        console.log('Error:', error);
       });
   };
 
@@ -302,7 +345,7 @@ export default function CutomHeaderScreen() {
   const logo = scrollY => {
     return (
       <View style={{margin: 20}}>
-        <Animated.View style={[styles.profilePic, {width: 100, height: 100}]}>
+        {/* <Animated.View style={[styles.profilePic, {width: 100, height: 100}]}>
           <Image
             source={require('../assets/photosPortraitMe.png')}
             style={[
@@ -310,13 +353,32 @@ export default function CutomHeaderScreen() {
               {width: 80, height: 80, borderRadius: 25.5},
             ]}
           />
-        </Animated.View>
-        <Text style={{color: 'white', fontSize: 20, marginTop: -10}}>
-          Chamil pathirana
+        </Animated.View> */}
+        <Text style={{color: 'white', fontSize: 20, marginTop: -20,marginBottom:10}}>
+          {route.params.email}
         </Text>
+        <StepIndicator
+                  customStyles={customStyles}
+                  currentPosition={currentPosition}
+                  labels={labels}
+                  stepCount={3}
+                  onPress={()=>setCurrentPosition(currentPosition+1)}
+                  
+            />
+            {/* {
+               currentPosition==0?
+               <Text>1</Text>
+               :
+               currentPosition==1?
+               <Text>2</Text>
+               :
+               <Text>3</Text>
+            } */}
       </View>
     );
   };
+
+  console.log(route.params)
   const renderHeader = () => {
     const opacity = scrollY.y.interpolate({
       inputRange: [0, 60, 90],
@@ -336,11 +398,258 @@ export default function CutomHeaderScreen() {
             />
           </View>
           <Animated.View style={{opacity}}>
-            <Text style={styles.headerText}>Chamil pathirana</Text>
+            <Text style={styles.headerText}>{route.params.email}</Text>
           </Animated.View>
+
+          
         </View>
         {/* </View> */}
       </View>
+    );
+  };
+  
+  const renderBody = () => {
+    
+
+    return (
+      <View>
+              <View
+                style={[styles.cardcontainer, {width: windowWidth}]}
+                activeOpacity={0.95}>
+                <View style={styles.labelContainer}>
+                  <View>
+                    <View>
+                      <Text style={styles.mainText}>Basic Information</Text>
+                    </View>
+                    <Text style={styles.labelText}>Full Name</Text>
+                    <TextInput
+                      style={[
+                        styles.labelTextContainer,
+                        {padding: 10, width: windowWidth - 43, marginBottom: 5},
+                      ]}
+                      onChangeText={text => setName(text)}
+                      value={name}
+                      placeholder="Enter name here"
+                    />
+                    <Text style={styles.labelText}>Date Of Birth</Text>
+                    <View>
+                      <TouchableOpacity
+                        style={[
+                          styles.labelTextContainer,
+                          {
+                            padding: 10,
+                            width: windowWidth - 43,
+                            paddingVertical: 15,
+                          },
+                        ]}
+                        onPress={showDatepicker}>
+                        {dobs == '' ? (
+                          <Text style={{color: 'gray', marginBottom: -19}}>
+                            Select Date of birth
+                          </Text>
+                        ) : null}
+                        <Text>{dobs}</Text>
+                      </TouchableOpacity>
+                    </View>
+
+                    <Text style={styles.labelText}>Grade</Text>
+                    <TextInput
+                      style={[
+                        styles.labelTextContainer,
+                        {padding: 10, width: windowWidth - 43, marginBottom: 5},
+                      ]}
+                      onChangeText={text => setGrade(text)}
+                      value={grade}
+                      placeholder="Enter grade here"
+                    />
+                    <Text style={styles.labelText}>Class Number</Text>
+                    <TextInput
+                      style={[
+                        styles.labelTextContainer,
+                        {padding: 10, width: windowWidth - 43, marginBottom: 5},
+                      ]}
+                      onChangeText={text => setClassNumber(text)}
+                      value={classNumber}
+                      placeholder="Enter class number"
+                    />
+                    <Text style={styles.labelText}>Height</Text>
+                    <TextInput
+                      style={[
+                        styles.labelTextContainer,
+                        {padding: 10, width: windowWidth - 43, marginBottom: 5},
+                      ]}
+                      onChangeText={text => setHeight(text)}
+                      keyboardType="numeric"
+                      value={height}
+                      placeholder="Enter height here"
+                    />
+                    <Text style={styles.labelText}>Weight</Text>
+                    <TextInput
+                      style={[
+                        styles.labelTextContainer,
+                        {padding: 10, width: windowWidth - 43, marginBottom: 5},
+                      ]}
+                      keyboardType="numeric"
+                      onChangeText={text => setWeight(text)}
+                      value={weight}
+                      placeholder="Enter weight here"
+                    />
+                    <Text style={styles.labelText}>Waist size</Text>
+                    <TextInput
+                      style={[
+                        styles.labelTextContainer,
+                        {padding: 10, width: windowWidth - 43, marginBottom: 5},
+                      ]}
+                      onChangeText={text => setWaist(text)}
+                      value={waist}
+                      placeholder="Enter waist here"
+                    />
+                    <Text style={styles.labelText}>
+                      Name Of Parents / Guardian
+                    </Text>
+                    <TextInput
+                      style={[
+                        styles.labelTextContainer,
+                        {padding: 10, width: windowWidth - 43, marginBottom: 5},
+                      ]}
+                      onChangeText={text => setParent(text)}
+                      value={parent}
+                      placeholder="Enter parents here"
+                    />
+                  </View>
+
+                  <View>
+                    {show && (
+                      <DateTimePicker
+                        testID="dateTimePicker"
+                        value={date}
+                        mode={mode}
+                        is24Hour={true}
+                        display="default"
+                        onChange={onChange}
+                      />
+                    )}
+                  </View>
+                </View>
+
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: 'red',
+                    borderRadius: 25,
+                    width: 120,
+                    padding: 12,
+                    marginTop: 10,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                  onPress={() =>
+                    basicDetails(
+                      name,
+                      grade,
+                      classNumber,
+                      height,
+                      weight,
+                      waist,
+                      parent,
+                    )
+                  }>
+                  <Text style={{color: 'white', alignItems: 'center'}}>
+                    Save
+                  </Text>
+                </TouchableOpacity>
+              </View>
+
+              <View
+                style={[styles.cardcontainer, {width: windowWidth}]}
+                activeOpacity={0.95}>
+                <View style={styles.labelContainer}>
+                  <View>
+                    <View>
+                      <Text style={styles.mainText}>Contact Information</Text>
+                    </View>
+                    <Text style={styles.labelText}>Father Phone Number</Text>
+                    <TextInput
+                      style={[
+                        styles.labelTextContainer,
+                        {padding: 10, width: windowWidth - 43, marginBottom: 5},
+                      ]}
+                      onChangeText={text => setFatherPhone(text)}
+                      value={fphone}
+                      placeholder="Enter Phone number"
+                    />
+
+                    <Text style={styles.labelText}>Mother Phone Number</Text>
+                    <TextInput
+                      style={[
+                        styles.labelTextContainer,
+                        {padding: 10, width: windowWidth - 43, marginBottom: 5},
+                      ]}
+                      onChangeText={text => setMotherPhone(text)}
+                      value={mphone}
+                      placeholder="Enter Phone number"
+                    />
+
+                    <Text style={styles.labelText}>Guardian Phone Number</Text>
+                    <TextInput
+                      style={[
+                        styles.labelTextContainer,
+                        {padding: 10, width: windowWidth - 43, marginBottom: 5},
+                      ]}
+                      onChangeText={text => setGuardianPhone(text)}
+                      value={guardphone}
+                      placeholder="Enter Phone number"
+                    />
+                    <Text style={styles.labelText}>
+                      Contactable person (Father/Mother/Guardian)
+                    </Text>
+                    <TextInput
+                      style={[
+                        styles.labelTextContainer,
+                        {padding: 10, width: windowWidth - 43, marginBottom: 5},
+                      ]}
+                      onChangeText={text => setConPerson(text)}
+                      value={conperson}
+                      placeholder="Enter name here"
+                    />
+                    <Text style={styles.labelText}>Email address</Text>
+                    <TextInput
+                      style={[
+                        styles.labelTextContainer,
+                        {padding: 10, width: windowWidth - 43, marginBottom: 5},
+                      ]}
+                      onChangeText={text => setEmail(text)}
+                      value={email}
+                      placeholder="Enter email address"
+                    />
+                    {/* <DropDownPicker
+                      open={open}
+                      value={value}
+                      items={items}
+                      setOpen={setOpen}
+                      setValue={setValue}
+                      setItems={setItems}
+                    /> */}
+                  </View>
+                </View>
+
+                <TouchableOpacity
+                  style={{
+                    backgroundColor: 'red',
+                    borderRadius: 25,
+                    width: 120,
+                    padding: 12,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                  onPress={() =>
+                    contactDetails(fphone, mphone, guardphone, conperson, email)
+                  }>
+                  <Text style={{color: 'white', alignItems: 'center'}}>
+                    Save
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
     );
   };
 
@@ -354,19 +663,22 @@ export default function CutomHeaderScreen() {
       // backgroundImage={{
       //       uri: 'https://wallsdesk.com/wp-content/uploads/2018/04/Palm-Desktop-Images.jpg',
       //     }}
-      backgroundColor={'#4b937c'}
+      backgroundColor={'#6bb333'}
       foreground={logo(scrollY)}
-      title={'Chamil pathirana'}
+      title={route.params.email}
       titleStyle={styles.titleStyle}
       // foregroundImage={{
       //   uri: 'https://reactjs.org/logo-og.png',
       // }}
       snapToEdge
       header={renderHeader()}
-      parallaxHeight={140}
+      parallaxHeight={120}
       headerHeight={40}
       headerSize={() => {}}
       onEndReached={() => {}}
+      
+      renderBody={renderBody()}
+
       tabs={[
         {
           title: 'Evaluation Form',
@@ -508,6 +820,7 @@ export default function CutomHeaderScreen() {
                       classNumber,
                       height,
                       weight,
+                      waist,
                       parent,
                     )
                   }>
@@ -2174,8 +2487,8 @@ export default function CutomHeaderScreen() {
                   style={{
                     backgroundColor: 'red',
                     borderRadius: 25,
-                    width: 120,
-                    padding: 12,
+                    width: 100,
+                    padding: 7,
                     marginTop: 10,
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -2206,7 +2519,7 @@ export default function CutomHeaderScreen() {
       tabTextActiveStyle={styles.tabTextActiveStyle}
       tabWrapperStyle={styles.tabWrapperStyle}
       tabsContainerStyle={styles.tabsContainerStyle}
-      tabsContainerBackgroundColor={'#4b937c'}
+      tabsContainerBackgroundColor={'#6bb333'}
       scrollEvent={event([{nativeEvent: {contentOffset: {y: scrollY.y}}}], {
         useNativeDriver: false,
       })}></StickyParallaxHeader>

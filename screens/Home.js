@@ -11,7 +11,7 @@ export default function Home() {
         StatusBar.setBackgroundColor('rgba(0,0,0,0)');
         StatusBar.setTranslucent(true);
         StatusBar.setBarStyle('dark-content')
-        StatusBar.setHidden(true)
+        StatusBar.setHidden(false)
       }
 
       const backAction = () => {
@@ -43,6 +43,18 @@ export default function Home() {
         scale: 1.3,
         
         translateY:0
+      },
+    };
+
+    const mapZoomIn = {
+      0: {
+        opacity: 0.6,
+        scale: 1,
+      },
+      1: {
+        opacity: 1,
+        scale: 2.3,
+        
       },
     };
 
@@ -118,8 +130,9 @@ export default function Home() {
                 /> 
 
   <Animatable.Image source={require('../assets/map2.png')}
-                delay={1000} 
+                delay={9000} 
                 style={styles.map} 
+                animation={'bounceIn'} duration={500}
                 /> 
 
           {/* </View> */}

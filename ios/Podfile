@@ -14,6 +14,12 @@ target 'GoodSeed' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  pod 'RNGLModelView', :path => '../node_modules/react-native-gl-model-view'
+
+  pod 'ReactNativeART', :path => '../node_modules/@react-native-community/art'
+
+  pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
+
   target 'GoodSeedTests' do
     inherit! :complete
     # Pods for testing
