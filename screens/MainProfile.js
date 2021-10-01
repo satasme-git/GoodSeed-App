@@ -1,5 +1,5 @@
 import React, {useRef, useState,useEffect,useContext} from 'react';
-import { Button, View , Text,ScrollView, ImageBackground,Image,TouchableHighlight,TouchableOpacity} from 'react-native';
+import { ActivityIndicator, View , Text,ScrollView, ImageBackground,Image,TouchableHighlight,TouchableOpacity} from 'react-native';
 import { useNavigation , DrawerActions } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { buttons, styles } from '../styles/Styles';
@@ -43,7 +43,19 @@ export default function MainProfile() {
 
     const BaseUrl = require('../styles/BaseUrl');
 
-    const options = {
+    const getImages =()=>{
+      
+      fetch(BaseUrl.BASE_URL+'/api/imageUpload/'+health.user.id)
+      .then((response) => response.json())
+      .then((json) => {
+         setData(json)
+         console.log(json)
+      })
+      .catch((error) => console.error(error))
+      .finally(() => setLoading(false));
+
+    }
+    const options2 = {
       title: 'Select Avatar',
       customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
       storageOptions: {
@@ -53,7 +65,7 @@ export default function MainProfile() {
     };
 
     const onCameraPress =()=>{
-      ImagePicker.launchCamera(options, (response) =>  {
+      ImagePicker.launchCamera(options2, (response) =>  {
          // console.log('Response = ', response);
         
          if (response.didCancel) {
@@ -66,21 +78,23 @@ export default function MainProfile() {
             const source = { uri: response.uri };
             const imdata = response.data;
  
-            setSingleFile(imdata)
-            uploadPhoto(imdata)
-            // uploadImage(response.data)
-        
-           // You can also display the image using data:
-           // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-        
-         //   this.setState({
-         //     avatarSource: source,
-         //   });
+            setFilePath(source)
+            console.log(response)
+            uploadPhoto(response)
          }
        });
     }
 
     const onGalleryPress =()=>{
+      const options = {
+         quality: 1.0,
+         maxWidth: 500,
+         maxHeight: 500,
+         storageOptions: {
+           skipBackup: true
+         }
+       }
+
       ImagePicker.launchImageLibrary(options, (response) => {
          // console.log('Response = ', response);
         
@@ -94,172 +108,35 @@ export default function MainProfile() {
            const source = { uri: response.uri };
            const imdata = response.data;
 
-           setSingleFile(imdata)
-
-           uploadImage()
-           // You can also display the image using data:
-           // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-        
-         //   this.setState({
-         //     avatarSource: source,
-         //   });
+           setFilePath(source)
+            // console.log(health.user)
+            uploadPhoto(response)
          }
        });
     }
 
     const uploadPhoto=(photo)=>{
-
-      var aaaa = singleFile;
-      // const data = new FormData();
-      // data.append('name', 'Image Upload');
-      // data.append('file_attachment', fileToUpload);
-
-      RNFetchBlob.fetch('POST', BaseUrl.BASE_URL+'/api/imageUpload', {
+      setLoading(true);
+      RNFetchBlob.fetch('POST', BaseUrl.BASE_URL+'/api/imageUpload/'+health.user.id, {
           Authorization: "Bearer access-token",
          //  otherHeader: "foo",
           'Content-Type': 'multipart/form-data',
       }, [
-         { name: 'image', filename: 'image.png', type: 'image/png', data: JSON.stringify(photo) },
+         { name: 'profile_pics', filename: photo.fileName, type: photo.type, data: photo.data },
       ]).then((resp) => {
-          console.log(resp.text());
+         // getImages()
+         setData(resp.json())
+          console.log(resp.json());
+
       }).catch((err) => {
           console.log(err);
-      });
-
-      // this.setState({
-      //     isLoading: false,
-
-      //     dataa: ''
-
-      // });
+      }).finally(() => setLoading(false));
   }
 
 
-    const selectFile = () => {
-      const options = {
-         mediaType: 'photo',
-         maxWidth: 300,
-         maxHeight: 300,
-         quality: 0.8,
-         cameraType: 'back',
-         includeBase64: true,
-         saveToPhotos: false,
-         selectionLimit: 5
-      }
-
-      launchImageLibrary(options, (response) => {
-         console.log('Response = ', response);
-         if (response.didCancel) {
-          console.log('User cancelled image picker');
-          alert('User cancelled image picker');
-         } else if (response.error) {
-          console.log('ImagePicker Error: ', response.error);
-          alert('ImagePicker Error: ' + response.error);
-         } else {
-            const obj = Object.assign({}, response.assets);
-            setFilePath(obj['0'].uri)
-            setSingleFile(obj['0'])
-            // You can also display the image using data:
-            // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-        
-            console.log(obj['0'].uri)
-         }
-        })
-
-    };
-
-    
-
-    const openPicker =()=>{
-       
-      const options = {
-         mediaType: 'photo',
-         maxWidth: 300,
-         maxHeight: 300,
-         quality: 0.8,
-         cameraType: 'back',
-         includeBase64: true,
-         saveToPhotos: false,
-         selectionLimit: 5
-      }
-
-      launchCamera(options, (response) => { // Use launchImageLibrary to open image gallery
-        console.log('Response = ', response);
-      
-        if (response.didCancel) {
-          console.log('User cancelled image picker');
-        } else if (response.error) {
-          console.log('ImagePicker Error: ', response.error);
-        } else if (response.customButton) {
-          console.log('User tapped custom button: ', response.customButton);
-        } else {
-          const source = { uri: response.assets };
-          const obj = Object.assign({}, response.assets);
-          setFilePath(obj['0'].uri)
-          setSingleFile(response.assets)
-          uploadImage(response)
-          // You can also display the image using data:
-          // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-      
-          console.log(obj['0'].uri)
-        }
-      });
-
-
-     
-   }
-
-   const uploadImage = async (image) => {
-      // Check if any file is selected or not
-      // if (singleFile != null) {
-        // If file selected then create FormData
-      //   const obj = Object.assign({}, response);
-        const fileToUpload = singleFile;
-        const data = new FormData();
-        
-        data.append('name', 'Image Upload');
-        data.append('profile_pics', image );
-        // Please change file upload URL
-        let res = await fetch(
-          BaseUrl.BASE_URL+'/api/imageUpload',
-          {
-            method: 'POST',
-            body: data,
-            headers: {
-              'Content-Type': 'multipart/form-data; ',
-            },
-          }
-        );
-        let responseJson = await res.json();
-        console.log(responseJson)
-        if (responseJson.status == 1) {
-           console.log(responseJson)
-         //  alert('Upload Successful');
-        }
-      // } else {
-      //   // If no file selected the show alert
-      //   alert('Please Select File first');
-      // }
-    };
-
-    
-
-//   const getuserData = () => {
-//     fetch(
-//       'https://enewstag.com/api/socialUser/',
-//     )
-//       .then((response) => response.json())
-//       .then((json) => setData(json))
-//       .catch((error) => console.error(error))
-//       .finally(() => {setLoading(false);});
-//     setRefreshing(false);
-    
-//   };
-
+ 
     useEffect(() => {
-      // getuserData()
-      // refRBSheet.current.open()
-   
+      getImages()
     }, []);
 
     return (
@@ -344,13 +221,13 @@ export default function MainProfile() {
                closeOnPressMask={false}
                customStyles={{
                   wrapper: {
-                     backgroundColor: "transparent",
+                     backgroundColor: "rgba(0,0,0,0.15)",
                      zIndex:1
                   },
                   draggableIcon: {
                      backgroundColor: "#000"
                   },
-                  container:[styles.bottomSheet,{elevation:10,padding:10}]
+                  container:styles.bottomSheet
                }}
                closeOnPressBack={true}
                animationType={'slide'}
@@ -360,16 +237,26 @@ export default function MainProfile() {
                <Text style={{color:'black',fontSize:20,textAlign:'center'}}>Transformation Progress</Text>
                
                <View style={{flexDirection:'row',justifyContent: 'space-evenly',margin:10}}>
-               
-               <View style={[styles.profilePicBig,{backgroundColor: 'rgba(107,179,51,0.2)',}]}>
-                <Image 
-                  source={require('../assets/profile.png')} 
-                  style={styles.profilePicBig}
-               />
-               <Text style={{textAlign:'center',backgroundColor:'rgba(107,179,51,0.4)',padding:2,borderBottomLeftRadius:10,borderBottomRightRadius:10}}>Last Month</Text>  
+               {data.map((item,index)=>
+               index==0?
+               <View key={index} style={[styles.profilePicBig,{backgroundColor: 'rgba(107,179,51,0.2)',}]}>
+                {
+                     item.image==null?
+                     <Image 
+                        source={require('../assets/profile.png')} 
+                        style={styles.profilePicBig}
+                     />
+               :
+                     <Image 
+                        // source={{uri:filePath}}
+                        source={{uri:BaseUrl.BASE_URL+'/assets/profile_pics/'+item.image}}
+                        style={styles.profilePicBig2}
+                     />
+                  }
+               <Text style={{textAlign:'center',backgroundColor:'rgba(107,179,51,0.4)',padding:2,borderBottomLeftRadius:10,borderBottomRightRadius:10}}>{item.month}</Text>  
                </View>
-               
-               <TouchableHighlight onPress={()=>{
+               :
+               <TouchableHighlight  key={index}  onPress={()=>{
                   setShow(true)
                   setTimeout(() => {
                      setShow(null)
@@ -413,7 +300,12 @@ export default function MainProfile() {
                   }
 
                   {
-                     filePath=={}?
+                     isLoading==true?
+                     <View style={[styles.profilePicBig2,{justifyContent:'center'}]}>
+                     <ActivityIndicator size="large" color="#4b937c" />
+                     </View>
+                     :
+                     item.image==null?
                      <Image 
                         source={require('../assets/profile.png')} 
                         style={styles.profilePicBig}
@@ -421,23 +313,25 @@ export default function MainProfile() {
                :
                      <Image 
                         // source={{uri:filePath}}
-                        source={require('../assets/profile.png')} 
+                        source={{uri:BaseUrl.BASE_URL+'/assets/profile_pics/'+item.image}} 
                         style={styles.profilePicBig2}
                      />
                   }
                  
-               <Text style={{textAlign:'center',backgroundColor:'rgba(107,179,51,0.4)',padding:2,borderBottomLeftRadius:10,borderBottomRightRadius:10}}>This Month</Text>   
+               <Text style={{textAlign:'center',backgroundColor:'rgba(107,179,51,0.4)',padding:2,borderBottomLeftRadius:10,borderBottomRightRadius:10}}>{item.month}</Text>   
                </View>
                </TouchableHighlight>
+               )}
+               {/* <View style={[styles.profilePicBig,{backgroundColor: 'rgba(107,179,51,0.2)',}]}>
+                <Image 
+                  source={require('../assets/profile.png')} 
+                  style={styles.profilePicBig}
+               />
+               <Text style={{textAlign:'center',backgroundColor:'rgba(107,179,51,0.4)',padding:2,borderBottomLeftRadius:10,borderBottomRightRadius:10}}>Last Month</Text>  
+               </View> */}
                
-               {/* <TouchableOpacity
-                  activeOpacity={0.5}
-                  style={styles.buttonStyle}
-                  onPress={()=>openPicker()}>
-                  <Text style={styles.textStyle}>
-                     Choose Image
-                  </Text>
-               </TouchableOpacity> */}
+               
+
                </View>
 
             </RBSheet>

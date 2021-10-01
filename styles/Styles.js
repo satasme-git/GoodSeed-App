@@ -540,7 +540,7 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     zIndex:2,
     margin:0,
-    resizeMode:'center',
+    // resizeMode:'center',
     // margin:10
   },
   profilPicBack:{

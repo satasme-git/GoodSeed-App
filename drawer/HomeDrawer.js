@@ -23,6 +23,7 @@ import Achivements from '../screens/Achivements'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { HealthProvider, HealthContext } from '../context/Context';
+import { NavigationContainer } from '@react-navigation/native';
 
 const Drawer = createDrawerNavigator();
 
@@ -35,7 +36,9 @@ function CustomDrawerContent(props) {
         {/* <Text style={{color:'gray'}}>{health.user.email}</Text> */}
         <Text style={{color:'black',fontSize:17}}>{health.user.email}</Text>
       </View>
-      <DrawerItemList {...props} itemStyle={{paddingLeft:20}} labelStyle={{fontSize:16}}/>
+      <DrawerItemList {...props} itemStyle={{marginLeft:25}} labelStyle={{fontSize:16}}
+      onPress = {()=>console.log('pressed')}
+      />
         {/* <View
           style={{
           borderBottomColor: 'black',
@@ -51,23 +54,22 @@ function CustomDrawerContent(props) {
     </DrawerContentScrollView>
   );
 }
+
 export default function MyDrawer() {
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
+  const [screen, setScreen] = useState(<LoggedDrawer/>);
   const health = useContext(HealthContext);
+  
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('user')
-      return jsonValue != null ?[ 
-      setData(JSON.parse(jsonValue)), 
-      console.log('drawer      '+jsonValue)]
-      
-      : 
-      setData(jsonValue);
+        return jsonValue != null ?setScreen(<LoggedDrawer/>):setScreen(<UnLoggedDrawer/>);
     } catch(e) {
       console.log(e)
       // error reading value
     }
+
   }
   useEffect(() =>   {
     getData()
@@ -75,14 +77,23 @@ export default function MyDrawer() {
 
   
   return (
-    // data==[]
-    parseInt(health.user.position)==3
-    ?
+    <NavigationContainer>
+      {screen}
+    </NavigationContainer>
+  );
+}
+
+
+
+function LoggedDrawer() {
+  
+  return (
+
     <Drawer.Navigator 
     drawerContent={props => <CustomDrawerContent {...props} />}
     drawerContentOptions={{
       activeTintColor: '#6bb333',
-      itemStyle: { marginVertical: 10 },
+      itemStyle: { paddingVertical: 10 },
       activeBackgroundColor:'white',
       
     }}
@@ -91,210 +102,136 @@ export default function MyDrawer() {
     >
     
       <Drawer.Screen 
-      name="Tabs" 
-      component={Tabs}  
-      options={{ drawerLabel: 'Home' ,
-      drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'home'} />
-    }}
+        name="Tabs" 
+        component={Tabs}  
+        options={{ drawerLabel: 'Home' ,
+        drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'home'} />
+      }}
       />
 
       <Drawer.Screen 
-      name="Profile" 
-      component={MainProfile}   
-      options={{ drawerLabel: 'Profile' ,
-      drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'user'} />
-    }}
+        name="Profile" 
+        component={MainProfile}   
+        options={{ drawerLabel: 'Profile' ,
+        drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'user'} />
+      }}
       />
       
       <Drawer.Screen 
-      name="Achivements" 
-      component={Achivements}    
-      options={{ drawerLabel: 'Achivements' ,
-      drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'heart'} />
-    }}
+        name="Achivements" 
+        component={Achivements}    
+        options={{ drawerLabel: 'Achivements' ,
+        drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'heart'} />
+      }}
       />
 
       <Drawer.Screen 
-      name="Summary" 
-      component={Summary}   
-      options={{ drawerLabel: 'Summary' ,
-      drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'bars'} />
-    }} 
+        name="Summary" 
+        component={Summary}   
+        options={{ drawerLabel: 'Summary' ,
+        drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'bars'} />
+      }} 
       />
 
       <Drawer.Screen 
-      name="Contact us" 
-      component={Contact}   
-      options={{ drawerLabel: 'Contact us' ,
-      drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'contacts'} />
-    }} 
+        name="Contact us" 
+        component={Contact}   
+        options={{ drawerLabel: 'Contact us' ,
+        drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'contacts'} />
+      }} 
       />
  
       <Drawer.Screen 
-      name="About" 
-      component={About}   
-      options={{ drawerLabel: 'About' ,
-      drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'infocirlceo'} />
-    }} 
+        name="About" 
+        component={About}   
+        options={{ drawerLabel: 'About' ,
+        drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'infocirlceo'} />
+      }} 
       />
 
     <Drawer.Screen 
-      name="Login" 
-      component={LoginStack}    
-      options={{ drawerLabel: 'Login' ,
-      drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'login'} />
-    }}
+        name="Login" 
+        component={LoginStack}    
+        options={{ drawerLabel: 'Login' ,
+        drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'login'} />
+      }}
       />
-
-
     </Drawer.Navigator>
-    :
-    // parseInt(data.position)==3
 
-    // ?
-    // <Drawer.Navigator 
-    // drawerContent={props => <CustomDrawerContent {...props} />}
-    // drawerContentOptions={{
-    //   activeTintColor: '#6bb333',
-    //   itemStyle: { marginVertical: 10 },
-    //   activeBackgroundColor:'white',
-      
-    // }}
-    // initialRouteName={'Tabs'}
-    
-    // >
-    
-    //   <Drawer.Screen 
-    //   name="Tabs" 
-    //   component={Tabs}  
-    //   options={{ drawerLabel: 'Home' ,
-    //   drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'home'} />
-    // }}
-    //   />
+  );
+}
+function UnLoggedDrawer() {
+  
+  return (
 
-    //   <Drawer.Screen 
-    //   name="Profile" 
-    //   component={MainProfile}   
-    //   options={{ drawerLabel: 'Profile' ,
-    //   drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'user'} />
-    // }}
-    //   />
-      
-    //   <Drawer.Screen 
-    //   name="Achivements" 
-    //   component={Achivements}    
-    //   options={{ drawerLabel: 'Achivements' ,
-    //   drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'heart'} />
-    // }}
-    //   />
-
-    //   <Drawer.Screen 
-    //   name="Summary" 
-    //   component={Summary}   
-    //   options={{ drawerLabel: 'Summary' ,
-    //   drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'bars'} />
-    // }} 
-    //   />
-
-    //   <Drawer.Screen 
-    //   name="Contact us" 
-    //   component={Contact}   
-    //   options={{ drawerLabel: 'Contact us' ,
-    //   drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'contacts'} />
-    // }} 
-    //   />
- 
-    //   <Drawer.Screen 
-    //   name="About" 
-    //   component={About}   
-    //   options={{ drawerLabel: 'About' ,
-    //   drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'infocirlceo'} />
-    // }} 
-    //   />
-
-    // <Drawer.Screen 
-    //   name="Login" 
-    //   component={LoginStack}    
-    //   options={{ drawerLabel: 'Login' ,
-    //   drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'login'} />
-    // }}
-    //   />
-
-
-    // </Drawer.Navigator>
-    // :
-    
-    
     <Drawer.Navigator 
     drawerContent={props => <CustomDrawerContent {...props} />}
     drawerContentOptions={{
       activeTintColor: '#6bb333',
-      itemStyle: { marginVertical: 10 },
+      itemStyle: { paddingVertical: 10 },
       activeBackgroundColor:'white',
       
     }}
     initialRouteName={'Login'}
     
     >
-      {/* {console.log(data.position)} */}
     
       <Drawer.Screen 
-      name="Tabs" 
-      component={Tabs}  
-      options={{ drawerLabel: 'Home' ,
-      drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'home'} />
-    }}
+        name="Tabs" 
+        component={Tabs}  
+        options={{ drawerLabel: 'Home' ,
+        drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'home'} />
+      }}
       />
 
       <Drawer.Screen 
-      name="Profile" 
-      component={MainProfile}   
-      options={{ drawerLabel: 'Profile' ,
-      drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'user'} />
-    }}
+        name="Profile" 
+        component={MainProfile}   
+        options={{ drawerLabel: 'Profile' ,
+        drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'user'} />
+      }}
       />
       
       <Drawer.Screen 
-      name="Achivements" 
-      component={Achivements}    
-      options={{ drawerLabel: 'Achivements' ,
-      drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'heart'} />
-    }}
+        name="Achivements" 
+        component={Achivements}    
+        options={{ drawerLabel: 'Achivements' ,
+        drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'heart'} />
+      }}
       />
 
       <Drawer.Screen 
-      name="Summary" 
-      component={Summary}   
-      options={{ drawerLabel: 'Summary' ,
-      drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'bars'} />
-    }} 
+        name="Summary" 
+        component={Summary}   
+        options={{ drawerLabel: 'Summary' ,
+        drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'bars'} />
+      }} 
       />
 
       <Drawer.Screen 
-      name="Contact us" 
-      component={Contact}   
-      options={{ drawerLabel: 'Contact us' ,
-      drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'contacts'} />
-    }} 
+        name="Contact us" 
+        component={Contact}   
+        options={{ drawerLabel: 'Contact us' ,
+        drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'contacts'} />
+      }} 
       />
  
       <Drawer.Screen 
-      name="About" 
-      component={About}   
-      options={{ drawerLabel: 'About' ,
-      drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'infocirlceo'} />
-    }} 
+        name="About" 
+        component={About}   
+        options={{ drawerLabel: 'About' ,
+        drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'infocirlceo'} />
+      }} 
       />
 
     <Drawer.Screen 
-      name="Login" 
-      component={LoginStack}    
-      options={{ drawerLabel: 'Login' ,
-      drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'login'} />
-    }}
+        name="Login" 
+        component={LoginStack}    
+        options={{ drawerLabel: 'Login' ,
+        drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'login'} />
+      }}
       />
-
-
     </Drawer.Navigator>
+
   );
 }

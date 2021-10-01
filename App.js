@@ -107,13 +107,13 @@ export default function App() {
 
   return (
     <HealthProvider>
-      <NavigationContainer>
+      {/* <NavigationContainer> */}
         <StatusBar backgroundColor={'#4b937c'} />
         <HomeDrawer/>
         {/* <SelectStack/> */}
         {/* <LoginStack/> */}
         {/* <Eveluation/> */}
-        </NavigationContainer>
+        {/* </NavigationContainer> */}
     </HealthProvider>
   );
 }
