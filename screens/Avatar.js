@@ -20,10 +20,10 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 export default function Avatar() {
     useEffect(() => {
-        if (Platform.OS === 'android') {
-            StatusBar.setBackgroundColor('rgba(0,0,0,0)');
-            StatusBar.setTranslucent(true);
-          }
+        // if (Platform.OS === 'android') {
+        //     StatusBar.setBackgroundColor('rgba(0,0,0,0)');
+        //     StatusBar.setTranslucent(true);
+        //   }
       }, []);
 
     //   const [imageURI, setImageURI] = useState(

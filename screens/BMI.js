@@ -4,6 +4,8 @@ import { Background } from '../styles/Background';
 import { BlurView } from "@react-native-community/blur";
 import RnVerticalSlider from 'rn-vertical-slider';
 
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 import Slider from '@react-native-community/slider';
 
 import SwitchSelector from "react-native-switch-selector";
@@ -107,7 +109,7 @@ const calculateBmi = async () => {
     setColor('#ec1f26')
     setColor2('#f1484e')
     setImg(require('../assets/bmi/40.png'))
-    setText('EXTREMLY UNDERWEIGHT')
+    setText('EXTREMLY OBESE')
   }
 
   setSBmi(_Bmi_val)
@@ -149,7 +151,7 @@ const calculateBmiStandard = async () => {
     setColor('#ec1f26')
     setColor2('#f85e63')
     setImg(require('../assets/bmi/40.png'))
-    setText('EXTREMLY UNDERWEIGHT')
+    setText('EXTREMLY OBESE')
   }
 
   setSBmi(_Bmi_val)
@@ -157,15 +159,28 @@ const calculateBmiStandard = async () => {
 }
 
   return (
-    <View style={styles.container}>
-        <Background>
-        <BlurView
+    <View style={[styles.container,{
+      alignItems:'center',
+    justifyContent:'center'
+    }]}>
+        {/* <Background> */}
+        <View style={{backgroundColor: 'transparent',width:'100%',position:'absolute',top:0,left:0,padding:10}}>
+             <Ionicons 
+                name="menu-outline" 
+                size={30} 
+                color="black" 
+                style={{zIndex:2}}
+                onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}
+             /> 
+             {/* <Text style={{color:'white',fontSize:22,marginLeft:10}}>Profile</Text> */}
+          </View>
+        {/* <BlurView
           style={styles.absolute}
           // viewRef={viewRef}
           blurType="xlight"
           blurAmount={50}
           reducedTransparencyFallbackColor="white"
-        />
+        /> */}
       <Modal 
       isVisible={isModalVisible}
       // isVisible={true}
@@ -212,10 +227,10 @@ const calculateBmiStandard = async () => {
       </Animated.View> */}
     <SwitchSelector
     style={{position: 'absolute',top:10,width:windowWidth-200}}
-    textColor={'#4b937c'} //'#7a44cf'
+    textColor={'#6bb333'} //'#7a44cf'
     selectedColor={'white'}
-    buttonColor={'#4b937c'}
-    borderColor={'#4b937c'}
+    buttonColor={'#6bb333'}
+    borderColor={'#6bb333'}
       options={options}
       initial={0}
       onPress={value => setCm(value)}
@@ -227,7 +242,7 @@ const calculateBmiStandard = async () => {
           minimumValue={0}
           maximumValue={200}
           vertical={true}
-          minimumTrackTintColor="#FFFFFF"
+          minimumTrackTintColor="#6bb333"
           maximumTrackTintColor="#000000"
           value={120}
           step={1}
@@ -242,11 +257,12 @@ const calculateBmiStandard = async () => {
           minimumValue={0}
           maximumValue={840}
           vertical={true}
-          minimumTrackTintColor="#FFFFFF"
+          minimumTrackTintColor="#6bb333"
           maximumTrackTintColor="#000000"
           value={480}
           step={10}
           onValueChange={(value)=>setLbVal(value)}
+          thumbImage={require('../assets/thumb.png')}
        />
 </View>
 }
@@ -287,7 +303,7 @@ const calculateBmiStandard = async () => {
         minimumValue={0}
         maximumValue={200}
         vertical={true}
-        minimumTrackTintColor="#FFFFFF"
+        minimumTrackTintColor="#6bb333"
         maximumTrackTintColor="#000000"
         value={30}
         step={1}
@@ -302,7 +318,7 @@ const calculateBmiStandard = async () => {
         minimumValue={0}
         maximumValue={440}
         vertical={true}
-        minimumTrackTintColor="#FFFFFF"
+        minimumTrackTintColor="#6bb333"
         maximumTrackTintColor="#000000"
         value={66}
         step={1}
@@ -313,9 +329,9 @@ const calculateBmiStandard = async () => {
 }
 
 {cm==true?
-  <Image source={require('../assets/avatar.png')} style={{height:((windowHeight-130)/200)*parseInt(value),width:((windowWidth-100)/200)*parseInt(weight),position: 'absolute',bottom:55,resizeMode:'stretch'}} />
+  <Image source={require('../assets/profile2.png')} style={{height:((windowHeight-130)/200)*parseInt(value),width:((windowWidth-100)/200)*parseInt(weight),position: 'absolute',bottom:55,resizeMode:'stretch'}} />
   :
-  <Image source={require('../assets/avatar.png')} style={{height:((windowHeight-130)/840)*parseInt(lbVal),width:((windowWidth-100)/440)*parseInt(lbweight),position: 'absolute',bottom:55,resizeMode:'stretch'}} />
+  <Image source={require('../assets/profile2.png')} style={{height:((windowHeight-130)/840)*parseInt(lbVal),width:((windowWidth-100)/440)*parseInt(lbweight),position: 'absolute',bottom:55,resizeMode:'stretch'}} />
 }      
 
 <TouchableHighlight 
@@ -326,7 +342,7 @@ onPress={cm==true?()=>calculateBmi():()=>calculateBmiStandard()} >
 </TouchableHighlight>
     
 
-      </Background>
+      {/* </Background> */}
     </View>
   );
 }

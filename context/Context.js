@@ -26,6 +26,7 @@ export const HealthProvider = ({ children }) => {
   const [state, setState] = useState("home");
   const [complete, setComplete] = useState(0);
   const [userFull, setUserFull] = useState([]);
+  const [steps, setSteps] = useState(0);
 
   // const getData = async () => {
   //   try {
@@ -54,7 +55,9 @@ export const HealthProvider = ({ children }) => {
         complete,
         setComplete,
         userFull,
-        setUserFull
+        setUserFull,
+        steps,
+        setSteps
       }}
     >
       {children}

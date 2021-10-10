@@ -1,31 +1,35 @@
 import React, { useState , useEffect , useContext, useRef  } from 'react';
-import { StatusBar, View , BackHandler , Alert} from 'react-native';
+import { StatusBar, View , BackHandler , Linking} from 'react-native';
 import { useNavigation , DrawerActions ,useRoute } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { buttons, styles } from '../styles/Styles';
 import * as Animatable from 'react-native-animatable';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Home() {
-  useEffect(() => {
-    if (Platform.OS === 'android') {
-        StatusBar.setBackgroundColor('rgba(0,0,0,0)');
-        StatusBar.setTranslucent(true);
-        StatusBar.setBarStyle('dark-content')
-        StatusBar.setHidden(false)
-      }
 
-      const backAction = () => {
-        navigation.goBack()
-        StatusBar.setHidden(false)
-        return true;
-      };
   
-      const backHandler = BackHandler.addEventListener(
-        "hardwareBackPress",
-        backAction
-      );
+
+  useEffect(() => {
+    // if (Platform.OS === 'android') {
+    //     StatusBar.setBackgroundColor('rgba(0,0,0,0)');
+    //     StatusBar.setTranslucent(true);
+    //     StatusBar.setBarStyle('dark-content')
+    //     StatusBar.setHidden(false)
+    //   }
+
+      // const backAction = () => {
+      //   navigation.goBack()
+      //   StatusBar.setHidden(false)
+      //   return true;
+      // };
   
-      return () => backHandler.remove();
+      // const backHandler = BackHandler.addEventListener(
+      //   "hardwareBackPress",
+      //   backAction
+      // );
+  
+      // return () => backHandler.remove();
 
   }, []);
     const navigation = useNavigation();

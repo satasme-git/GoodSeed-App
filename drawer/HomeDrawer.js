@@ -9,7 +9,7 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 
-import { TouchableHighlight, View , Text,Image} from 'react-native';
+import { TouchableHighlight, View , Text,Image,StatusBar} from 'react-native';
 
 import Tabs from '../tabs/HomeTabs'
 import About from '../screens/About'
@@ -17,6 +17,7 @@ import LoginStack from '../stacks/LoginStack'
 import Login from '../screens/Login'
 import Contact from '../screens/Contact'
 import SelectStack from '../stacks/SelectStack'
+import BMIStack from '../stacks/BMIStack'
 import MainProfile from '../screens/MainProfile'
 import Summary from '../screens/Summary'
 import Achivements from '../screens/Achivements'
@@ -24,6 +25,19 @@ import Achivements from '../screens/Achivements'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { HealthProvider, HealthContext } from '../context/Context';
 import { NavigationContainer } from '@react-navigation/native';
+
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator,
+} from 'react-native-indicators';
+
 
 const Drawer = createDrawerNavigator();
 
@@ -58,13 +72,24 @@ function CustomDrawerContent(props) {
 export default function MyDrawer() {
 
   const [data, setData] = useState({});
-  const [screen, setScreen] = useState(<LoggedDrawer/>);
+  const [screen, setScreen] = useState(<Loading/>);
   const health = useContext(HealthContext);
   
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('user')
-        return jsonValue != null ?setScreen(<LoggedDrawer/>):setScreen(<UnLoggedDrawer/>);
+      
+        return jsonValue != null ?
+        JSON.parse(jsonValue).position==3?
+        setScreen(<LoggedDrawer/>):
+        setScreen(<UnLoggedDrawer/>)
+        // var value = JSON.stringify(jsonValue)
+        // console.log("json value "+JSON.parse(jsonValue).position)
+      
+        :
+        setScreen(<UnLoggedDrawer/>)
+        ;
+
     } catch(e) {
       console.log(e)
       // error reading value
@@ -83,7 +108,14 @@ export default function MyDrawer() {
   );
 }
 
-
+function Loading(){
+  return (
+    <View style={{justifyContent:'center',alignItems:'center',flex:1}}>
+      <StatusBar backgroundColor={'#6bb333'} />
+      <MaterialIndicator color={'#6bb333'} />
+    </View>
+  )
+}
 
 function LoggedDrawer() {
   
@@ -117,6 +149,14 @@ function LoggedDrawer() {
       }}
       />
       
+      <Drawer.Screen 
+        name="BMIStack" 
+        component={BMIStack}    
+        options={{ drawerLabel: 'BMI Chart' ,
+        drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'linechart'} />
+      }}
+      />
+
       <Drawer.Screen 
         name="Achivements" 
         component={Achivements}    
@@ -192,6 +232,14 @@ function UnLoggedDrawer() {
       }}
       />
       
+      <Drawer.Screen 
+        name="BMIStack" 
+        component={BMIStack}    
+        options={{ drawerLabel: 'BMI Chart' ,
+        drawerIcon: ({ focused, color, size }) => <AntDesign color={color} size={20} name={'linechart'} />
+      }}
+      />
+
       <Drawer.Screen 
         name="Achivements" 
         component={Achivements}    

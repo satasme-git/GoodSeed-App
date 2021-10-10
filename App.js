@@ -16,6 +16,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // import PushNotificationIOS from "@react-native-community/push-notification-ios";
 // import PushNotification from "react-native-push-notification";
 import PushNotification, {Importance} from 'react-native-push-notification';
+import SplashScreen from 'react-native-splash-screen'
 export default function App() {
 
   const health = useContext(HealthContext);
@@ -27,7 +28,8 @@ export default function App() {
       const jsonValue = await AsyncStorage.getItem('user')
       return jsonValue != null ?[ 
       setData(JSON.parse(jsonValue)), 
-      console.log(jsonValue)]
+      // console.log(jsonValue)
+    ]
       
       : 
       setData(jsonValue);
@@ -38,7 +40,7 @@ export default function App() {
   }
   useEffect(() =>   {
     // console.log(health.user)
-    
+    SplashScreen.hide();
     PushNotification.configure({
       // (optional) Called when Token is generated (iOS and Android)
       onRegister: function (token) {
